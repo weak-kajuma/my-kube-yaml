@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcserver-proxy-svc
+spec:
+  selector:
+    app: mcserver-proxy
+  ports:
+    - protocol: "TCP"
+      port: 25565
+      targetPort: 25577
+  type: LoadBalancer
+  loadBalancerIP: 10.0.0.152
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcserver-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mcserver-proxy
+  template:
+    metadata:
+      labels:
+        app: mcserver-proxy
+    spec:
+      containers:
+        - name: mcserver-proxy-node
+          image: weakkajuma/waterfall:496.4
+          volumeMounts:
+          - name: mydata
+            mountPath: "/config"
+      volumes:
+        - name: mydata
+          persistentVolumeClaim:
+            claimName: nfs-claim1
