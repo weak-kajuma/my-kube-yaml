@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  params.txt: |-
+    name hoge
+    age 1
+    country piyo
+kind: ConfigMap
+metadata:
+  name: test-params
