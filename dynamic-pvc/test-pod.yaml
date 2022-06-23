@@ -17,4 +17,16 @@ spec:
   volumes:
     - name: cephfs
       persistentVolumeClaim:
-        claimName: cephfs-pvc
+        claimName: cephfs-pvc-test
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cephfs-pvc-test
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: rook-cephfs
